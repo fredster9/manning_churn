@@ -1,6 +1,15 @@
 -- I ended up downloading the partial and then full solutions.
 -- I got fairly close on my own but not close enough.
 
+--- ANSWERS ---
+
+Customers retained: 16405
+Customers churned: 32711
+Churn rate: 67%
+
+
+---- CODE ----
+
 ---------
 
 -- DROP TABLE livebook.observation;
@@ -84,4 +93,3 @@ FROM
 	livebook.observation
 GROUP BY 1
 
--- 67% retention rate
