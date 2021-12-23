@@ -52,6 +52,8 @@ Results from notebook: manning_customer_behavior_chap_1.py
 | 4 |    CrossReferenceTermOpened |    68188 |        7332 |               9 | 6.678571 |                0.001719 |
 | 5 | DashboardLivebookLinkOpened |    96616 |       11283 |               8 | 6.678571 |                0.001528 |
 
+    > this is wrong because it's events per accounts that had that event, not ALL events
+
 2. One example of running the events per day SQL and visualizing the result
 
 ![Metric by day](/chap1_eventy_by_day.png)
