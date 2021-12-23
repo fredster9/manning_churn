@@ -56,6 +56,3 @@ Results from notebook: manning_customer_behavior_chap_1.py
 
 ![Metric by day](/chap1_eventy_by_day.png)
 
-<img src="/chap1_eventy_by_day.png" alt="Getting started" />
-
-![image info](./chap1_eventy_by_day.png)
