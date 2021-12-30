@@ -17,7 +17,6 @@ cur = conn.cursor()
 
 cur.execute("SELECT * FROM livebook.event LIMIT 10")
 records = cur.fetchall()
-
 records
 
 # %%
@@ -35,7 +34,8 @@ df = pd.read_sql_query(query, con=conn)
 df
 
 # %%
-## ALL EVENTS PER CUSTOMER PER MONTH
+## ALL EVENTS PER CUSTOMER PER MONTH 
+# this is not their solution bc i'm calculating customers by month vs all time
 query = '''
     SELECT
         TO_CHAR(event_time, 'YYYY-MM')
@@ -50,6 +50,36 @@ query = '''
 '''
 df = pd.read_sql_query(query, con=conn)
 df
+
+# %%
+## ALL EVENTS PER CUSTOMER PER MONTH 
+# this is the book way of doing it - calcs all time accounts vs by mon
+query = '''
+    with 
+    date_range as (    
+    select  '2019-11-29'::timestamp as start_date,
+        '2020-06-04'::timestamp as end_date
+    ), account_count as (    
+    select count(distinct account_id) as n_account
+    from livebook.event
+    )
+    select e.event_type,
+        count(*) as n_event,
+        n_account as n_account,
+        count(*)::float/n_account::float as events_per_account,
+        extract(days from end_date-start_date)::float/28 as n_months,
+        (count(*)::float/n_account::float)/(extract(days from end_date-start_date)::float/28.0)
+            as events_per_account_per_month
+    from livebook.event e cross join account_count
+    inner join date_range ON
+    event_time >= start_date
+    and event_time <= end_date
+    group by e.event_type,n_account,end_date,start_date
+    order by events_per_account_per_month desc; 
+'''
+df = pd.read_sql_query(query, con=conn)
+df
+ 
 
 # %%
 ## INDIVIDUAL EVENTS PER CUSTOMER PER MONTH
